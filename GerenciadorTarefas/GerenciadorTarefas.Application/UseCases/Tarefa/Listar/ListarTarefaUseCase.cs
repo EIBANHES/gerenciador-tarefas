@@ -1,22 +1,19 @@
 ﻿using GerenciadorTarefas.Communication.Response;
 
-namespace GerenciadorTarefas.Application.UseCases.Tarefa.Listar;
-public class ListarTarefaUseCase
+namespace GerenciadorTarefas.Application.UseCases.Tarefa.Listar
 {
-    public ResponseTodasTarefasJson Execute()
+    public class ListarTarefaUseCase
     {
-        return new ResponseTodasTarefasJson
+        public ResponseShortTarefaJson Execute(int id)
         {
-            Tarefas = new List<ResponseShortTarefaJson>
+            return new ResponseShortTarefaJson
             {
-                new ResponseShortTarefaJson
-                {
-                    Nome = "Teste",
-                    Descricao = "Teste",
-                    Prioridade = Communication.Enums.PrioridadeEnum.Baixa,
-                    Status = Communication.Enums.StatusEnum.Em_Andamento
-                }
-            }
-        };
+                Id = id,
+                Nome = "Liste",
+                Descricao = "por id",
+                Prioridade = Communication.Enums.PrioridadeEnum.Baixa,
+                Status = Communication.Enums.StatusEnum.Em_Andamento
+            };
+        }
     }
 }

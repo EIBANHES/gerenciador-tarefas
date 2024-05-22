@@ -11,6 +11,7 @@ public class TarefaController : DeviceController
 
     [HttpPost]
     [ProducesResponseType(typeof(RequestCriarTarefaJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseErrorsJson), StatusCodes.Status400BadRequest)]
     public IActionResult Create([FromBody] RequestCriarTarefaJson request)
     {
         var useCase = new CriarTarefaUseCase();
@@ -25,7 +26,7 @@ public class TarefaController : DeviceController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public IActionResult GetAll()
     {
-        var useCase = new ListarTarefaUseCase();
+        var useCase = new ListarTarefasUseCase();
 
         var response = useCase.Execute();
 
@@ -35,6 +36,17 @@ public class TarefaController : DeviceController
         }
 
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseShortTarefaJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Get(int id)
+    {
+        var useCase = new ListarTarefaUseCase();
+        var response = useCase.Execute(id);
+        return Ok(response);
     }
 
 }
