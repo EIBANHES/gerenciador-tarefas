@@ -1,4 +1,6 @@
-﻿using GerenciadorTarefas.Application.UseCases.Tarefa.Criar;
+﻿using GerenciadorTarefas.Application.UseCases.Tarefa.Atualizar;
+using GerenciadorTarefas.Application.UseCases.Tarefa.Criar;
+using GerenciadorTarefas.Application.UseCases.Tarefa.Deletar;
 using GerenciadorTarefas.Application.UseCases.Tarefa.Listar;
 using GerenciadorTarefas.Communication.Request;
 using GerenciadorTarefas.Communication.Response;
@@ -45,6 +47,29 @@ public class TarefaController : DeviceController
     public IActionResult Get(int id)
     {
         var useCase = new ListarTarefaUseCase();
+        var response = useCase.Execute(id);
+        return Ok(response);
+    }
+
+    [HttpPut]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(RequestAtualizarTarefaJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Update(int id, [FromBody] RequestAtualizarTarefaJson request)
+    {
+        var useCase = new AtualizarTarefaUseCase();
+        var response = useCase.Execute(id, request);
+
+        return Ok(response);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseDeletaTarefaJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Delete(int id)
+    {
+        var useCase = new DeletarTarefaUseCase();
         var response = useCase.Execute(id);
         return Ok(response);
     }
